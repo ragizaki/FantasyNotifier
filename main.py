@@ -19,4 +19,5 @@ day = datetime.today().weekday()
 
 # send alert on Monday, Thursday or Sunday (NFL game days)
 if day == 0 or day == 3 or day == 6:
+    # email
     pass
