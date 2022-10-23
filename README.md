@@ -7,12 +7,12 @@ To use the project, follow these commmands:
 ```
 git clone ...
 cd fantasy-football-notifier
-python3 main.py <LEAGUE_ID> <TEAM_ID> <PHONE_NUMBER>
+python3 main.py <LEAGUE_ID> <TEAM_ID> <EMAIL_ADDRESS>
 ```
 
-This should set up recurring text messages every Thursday/Sunday before games, only in instances where a player in the user's starting lineup will be featured in a game on these days. These text messages can also be opted out of at any time for convenience.
+Running this will send a list of players to the given email address (must be a Gmail account). This process can be automated externally from CRON or Windows Schedule manager, etc.
 
 
 ## TODO
-- Automate the script call to have it run every week
 - Currently, the script has no way of discerning on which days an injured player is scheduled for. Thus, I'm planning to scrape the players' game dates and send messages on the condition that they have an upcoming game.
+- The user running the script is currently responsible for automating the script. It would be a better user experience if the automation functionality was out of the box from the script.
