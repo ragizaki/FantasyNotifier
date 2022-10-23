@@ -36,12 +36,12 @@ if __name__ == "__main__":
             smtp.starttls()
             smtp.ehlo()
 
-        smtp.login(SENDER, EMAIL_PASSWORD)
+            smtp.login(SENDER, EMAIL_PASSWORD)
 
-        subject = f'Injured Fantasy Players for {today}'
-        body = f'The following players are injured: {players}'
+            subject = f'Injured Fantasy Players for {today}'
+            body = f'The following players are injured: {players}'
 
-        msg = f'Subject: {subject}\n\n{body}'
+            msg = f'Subject: {subject}\n\n{body}'
 
-        smtp.sendmail(SENDER, receiver, msg)
+            smtp.sendmail(SENDER, receiver, msg)
     
