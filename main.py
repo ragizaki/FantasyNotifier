@@ -1,7 +1,13 @@
 import requests
-from bs4 import BeautifulSoup as bsoup
+import smtplib
+import os
 from datetime import datetime
+from bs4 import BeautifulSoup as bsoup
 from players import get_players_from_league
+
+EMAIL_ADDRESS = os.environ.get('EMAIL_USER')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASS')
+
 
 myteam_id = 602008841651027968
 league_id = 851541694313775104
@@ -14,10 +20,23 @@ my_players = [
 html = requests.get(injuries_url).content
 soup = bsoup(html, 'html.parser')
 tags = soup.find_all('a', string = my_players)
+players = ','.join(tags)
 
-day = datetime.today().weekday()
+now = datetime.now()
+format = "%m/%d/%Y"
+today = now.strftime(format)
 
-# send alert on Monday, Thursday or Sunday (NFL game days)
-if day == 0 or day == 3 or day == 6:
-    # email
-    pass
+# sending email with SMTP, this process is automated externally with cron
+with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.ehlo()
+
+    smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+
+    subject = f'Injured Fantasy Players for {today}'
+    body = f'The following players are injured: {players}'
+
+    msg = f'Subject: {subject}\n\n{body}'
+
+    smtp.sendmail(EMAIL_ADDRESS, EMAIL_ADDRESS, msg)
